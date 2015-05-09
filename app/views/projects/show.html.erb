@@ -1,0 +1,26 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Title:</strong>
+  <%= @project.title %>
+</p>
+
+<ul>
+  <% @project.tasks.each do |task| %>
+    <li>
+      <%= check_box_tag 'done', '', task.done, { 'data-id': task.id, 'data-project_id': task.project.id } %>
+      <%= task.title %>
+      <%= link_to '[Delete]', project_task_path(@project, task), method: :delete, data: { confirm: 'are you sure?' } %>
+    </li>
+  <% end %>
+</ul>
+
+<%= form_for([@project, @project.tasks.build]) do |f| %>
+  <%= f.label :title %>
+  <%= f.text_field :title %>
+
+  <%= f.submit %>
+<% end %>
+
+<%= link_to 'Edit', edit_project_path(@project) %> |
+<%= link_to 'Back', projects_path %>
